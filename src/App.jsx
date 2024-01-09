@@ -1,18 +1,28 @@
 import { useState } from "react";
+import { SideBarContext } from "./contexts/SidebarContext";
+import { BoardContext } from "./contexts/BoardContext";
 import Layout from "./Layout";
 import data from "./data.json";
+import TaskContent from "./TaskContent";
 
 function App() {
   const [board, setBoard] = useState(data.boards);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [sideBar, setSideBar] = useState(false);
   console.log(board);
+
   return (
     <>
       <div className="App font-jakarta">
-        <Layout sideBar={sideBar} selectedIndex={selectedIndex} board={board}>
-          <h1 className={`  ${sideBar ? "ml-[320px]" : "ml-20px"}`}>hello</h1>
-        </Layout>
+        <BoardContext.Provider
+          value={{ board, setBoard, selectedIndex, setSelectedIndex }}
+        >
+          <SideBarContext.Provider value={{ sideBar, setSideBar, board }}>
+            <Layout selectedIndex={selectedIndex} board={board}>
+              <TaskContent />
+            </Layout>
+          </SideBarContext.Provider>
+        </BoardContext.Provider>
       </div>
     </>
   );

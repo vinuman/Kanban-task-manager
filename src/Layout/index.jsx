@@ -6,7 +6,7 @@ const Layout = ({ children, board, selectedIndex, sideBar }) => {
   return (
     <>
       <NavBar selectedIndex={selectedIndex} board={board} />
-      <SideBar sideBar={sideBar} />
+      <SideBar />
       {children}
     </>
   );

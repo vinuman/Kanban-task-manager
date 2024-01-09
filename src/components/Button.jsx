@@ -4,7 +4,7 @@ const Button = ({ primary, secondary, destructive, text }) => {
   return (
     <>
       <button
-        className={` w-[164px] h-[48px] rounded-[20px] text-white4 text-[15px] font-bold ${
+        className={` w-[164px] h-[48px] rounded-[20px] text-white4 text-[15px] font-bold transition-all duration-300 ${
           primary
             ? " bg-darkBlue hover:bg-lightBlue"
             : secondary

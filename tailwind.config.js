@@ -2,7 +2,9 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      textColor: ["group-hover"],
+    },
     colors: {
       darkBlue: "#635FC7",
       lightBlue: "#A8A4FF",
