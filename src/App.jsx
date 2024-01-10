@@ -8,7 +8,7 @@ import TaskContent from "./TaskContent";
 function App() {
   const [board, setBoard] = useState(data.boards);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [sideBar, setSideBar] = useState(false);
+  const [sideBar, setSideBar] = useState(true);
   console.log(board);
 
   return (
@@ -18,7 +18,7 @@ function App() {
           value={{ board, setBoard, selectedIndex, setSelectedIndex }}
         >
           <SideBarContext.Provider value={{ sideBar, setSideBar, board }}>
-            <Layout selectedIndex={selectedIndex} board={board}>
+            <Layout>
               <TaskContent />
             </Layout>
           </SideBarContext.Provider>

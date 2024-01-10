@@ -2,10 +2,10 @@ import React from "react";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 
-const Layout = ({ children, board, selectedIndex, sideBar }) => {
+const Layout = ({ children }) => {
   return (
     <>
-      <NavBar selectedIndex={selectedIndex} board={board} />
+      <NavBar />
       <SideBar />
       {children}
     </>

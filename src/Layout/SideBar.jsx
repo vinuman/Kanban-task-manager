@@ -25,16 +25,16 @@ const SideBar = () => {
           <img className="" src={iconShowSideBar} alt="icon"></img>
         </div>
       ) : (
-        <div className="w-[300px]  pt-[32px]  h-screen absolute top-0 bg-white4">
+        <div className="w-[300px] pt-[32px]  h-screen absolute top-0  bg-white4">
           <img
             className="mx-[24px] w-[152px] h-[25px]"
             src={logoLight}
             alt="logo"
           ></img>
-          <h2 className=" mt-[40px] px-[24px]  text-[16px] font-bold tracking-[2.4px] text-white1">
+          <h2 className=" mt-[40px] px-[24px] text-[16px] font-bold tracking-[2.4px] text-white1">
             All Boards({board.length})
           </h2>
-          <div className=" mt-12">
+          <div className=" mt-12 min-h-[400px] ">
             {board.map((b, index) => (
               <div
                 onClick={() => setSelectedIndex(index)}
@@ -60,7 +60,7 @@ const SideBar = () => {
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-around p-4 w-[90%] mx-auto mt-[360px] bg-white3">
+          <div className="flex items-center justify-around p-4 w-[90%] mx-auto mt-[40px] bg-white3">
             <img src={sunIcon} alt="light theme"></img>
             <Toggle />
             <img src={moonIcon} alt="dark theme"></img>
