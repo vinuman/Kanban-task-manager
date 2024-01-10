@@ -25,7 +25,7 @@ const SideBar = () => {
           <img className="" src={iconShowSideBar} alt="icon"></img>
         </div>
       ) : (
-        <div className="w-[300px] pt-[32px]  h-screen absolute top-0  bg-white4">
+        <div className="w-[280px]  pt-[32px]  h-screen absolute top-0  bg-white4">
           <img
             className="mx-[24px] w-[152px] h-[25px]"
             src={logoLight}
