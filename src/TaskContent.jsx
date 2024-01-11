@@ -10,11 +10,12 @@ const TaskContent = () => {
   console.log("hey>>", board[selectedIndex].columns);
   function totalTrue(arr) {
     let count = 0;
-    for (let i = 0; i < arr.length; i++) {
-      if (i.isCompleted === false) {
+
+    arr.forEach((item) => {
+      if (item.isCompleted === true) {
         count++;
       }
-    }
+    });
     return count;
   }
   return (
@@ -37,7 +38,7 @@ const TaskContent = () => {
                 <TaskCard
                   title={task.title}
                   total={task.subtasks.length}
-                  pending={totalTrue(task.subtasks)}
+                  done={totalTrue(task.subtasks)}
                 />
               ))}
             </div>
