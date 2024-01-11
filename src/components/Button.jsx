@@ -1,11 +1,20 @@
 import React from "react";
 
-const Button = ({ primary, secondary, destructive, text, disabled }) => {
+const Button = ({
+  primary,
+  secondary,
+  destructive,
+  text,
+  disabled,
+  modal,
+  onClick,
+}) => {
   return (
     <>
       <button
+        onClick={onClick}
         disabled={disabled}
-        className={` w-[164px] h-[48px] rounded-[20px] text-white4 text-[15px] font-bold transition-all duration-300 ${
+        className={` h-[48px] rounded-[20px] text-white4 text-[15px] font-bold transition-all duration-300 ${
           primary
             ? " bg-darkBlue hover:bg-lightBlue"
             : secondary
@@ -13,7 +22,9 @@ const Button = ({ primary, secondary, destructive, text, disabled }) => {
             : destructive
             ? " bg-red1 hover:bg-red2"
             : ""
-        } ${disabled ? " opacity-40 cursor-not-allowed " : ""}`}
+        } ${disabled ? " opacity-40 cursor-not-allowed " : ""} ${
+          modal ? "w-[100%]" : " w-[164px]"
+        }`}
       >
         {text}
       </button>

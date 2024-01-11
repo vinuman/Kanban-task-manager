@@ -9,7 +9,7 @@ import Toggle from "../components/Toggle";
 import sunIcon from "../assets/icon-light-theme.svg";
 import moonIcon from "../assets/icon-dark-theme.svg";
 
-const SideBar = () => {
+const SideBar = ({ setVisible }) => {
   const { sideBar, setSideBar, board } = useContext(SideBarContext);
   const { selectedIndex, setSelectedIndex } = useContext(BoardContext);
   const generateKey = (pre) => {
@@ -59,7 +59,23 @@ const SideBar = () => {
                 </p>
               </div>
             ))}
+            <div
+              onClick={() => setVisible(true)}
+              className="flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer"
+            >
+              <img
+                className=" w-[16px] h-[16px]"
+                src={boardIcon}
+                alt="icon"
+              ></img>
+              <p
+                className={`  text-[15px] font-bold text-white1 hover:text-darkBlue`}
+              >
+                + Create New Board
+              </p>
+            </div>
           </div>
+
           <div className="flex items-center justify-around p-4 w-[90%] mx-auto mt-[40px] bg-white3">
             <img src={sunIcon} alt="light theme"></img>
             <Toggle />
