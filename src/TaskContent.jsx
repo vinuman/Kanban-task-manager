@@ -27,20 +27,21 @@ const TaskContent = () => {
       >
         {board[selectedIndex].columns.length ? (
           board[selectedIndex].columns.map((column) => (
-            <div className="">
-              <div className="flex items-center gap-[12px]">
+            <div className="min-w-[280px]">
+              <div className="flex items-center gap-[12px] ">
                 <div className={`w-[15px] h-[15px] rounded-full border`}></div>
                 <h2 className=" text-white1 text-[12px] tracking-[2.4px] uppercase font-bold">
                   {column.name} ({column.tasks.length})
                 </h2>
               </div>
-              {column.tasks.map((task) => (
-                <TaskCard
-                  title={task.title}
-                  total={task.subtasks.length}
-                  done={totalTrue(task.subtasks)}
-                />
-              ))}
+              {column.tasks &&
+                column.tasks.map((task) => (
+                  <TaskCard
+                    title={task.title}
+                    total={task.subtasks.length}
+                    done={totalTrue(task.subtasks)}
+                  />
+                ))}
             </div>
           ))
         ) : (
