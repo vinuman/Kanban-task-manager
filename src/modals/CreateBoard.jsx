@@ -10,6 +10,12 @@ const CreateBoard = ({ visible, setVisible }) => {
   const [boardName, setBoardName] = useState("");
   const { board, setBoard } = useContext(BoardContext);
 
+  let nextKey = 0;
+
+  const generateKey = () => {
+    return nextKey++;
+  };
+
   // Function to add a new column to the board
   const handleAddColumn = () => {
     let newArr = [...arr];
@@ -98,7 +104,7 @@ const CreateBoard = ({ visible, setVisible }) => {
               </p>
               {arr.map((a, i) => (
                 <div
-                  key={i}
+                  key={generateKey()}
                   className="flex justify-between items-center w-[100%] h-[40px] mb-4"
                 >
                   <input

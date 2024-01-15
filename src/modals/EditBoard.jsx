@@ -13,14 +13,15 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
   );
 
   console.log("edit", arr);
+  let nextKey = 0;
 
-  const generateKey = (pre) => {
-    return `${pre}_${new Date().getTime()}`;
+  const generateKey = () => {
+    return nextKey++;
   };
 
   useEffect(() => {
-    setBoardName(board[selectedIndex].name);
-    setArr(board[selectedIndex].columns);
+    setBoardName(board[selectedIndex]?.name || "");
+    setArr(board[selectedIndex]?.columns || []);
   }, [selectedIndex]);
 
   // Function to close the modal when clicking outside the content
@@ -42,11 +43,16 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
   };
 
   const handleRemoveColumn = (i) => {
-    setArr((prevArr) => prevArr.filter((_, index) => index !== i));
+    console.log("Before remove:", arr);
+    let newArr = arr.filter((_, index) => index !== i);
+    setArr(newArr);
+    console.log("After remove:", arr);
   };
 
   const handleAddColumn = () => {
+    console.log("Before add:", arr);
     setArr((prevArr) => [...prevArr, { name: "New Column", tasks: [] }]);
+    console.log("After add:", arr);
   };
 
   const handleSaveBoard = () => {
@@ -88,9 +94,9 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
               <p className="text-white1 mb-2 text-[12px] font-bold">
                 Board Columns
               </p>
-              {arr.map((a, i) => (
+              {arr.map((_, i) => (
                 <div
-                  key={generateKey(a.name)}
+                  key={generateKey()}
                   className="flex justify-between items-center w-[100%] h-[40px] mb-4"
                 >
                   <input
