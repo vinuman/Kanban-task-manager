@@ -4,7 +4,7 @@ import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import Button from "../components/Button";
 import { BoardContext } from "../contexts/BoardContext";
 
-const NavBar = ({ setEditBoardVisisble }) => {
+const NavBar = ({ setEditBoardVisisble, setDeleteBoardVisible }) => {
   const { board, selectedIndex } = useContext(BoardContext);
   const [editDeleteOption, setEditDeleteOption] = useState(false);
   return (
@@ -38,7 +38,13 @@ const NavBar = ({ setEditBoardVisisble }) => {
             >
               Edit Board
             </p>
-            <p className=" text-[16px] font-bold text-red1 hover:text-red2 cursor-pointer ">
+            <p
+              onClick={() => {
+                setDeleteBoardVisible(true);
+                setEditDeleteOption(false);
+              }}
+              className=" text-[16px] font-bold text-red1 hover:text-red2 cursor-pointer "
+            >
               Delete Board
             </p>
           </div>

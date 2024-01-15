@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BoardContext } from "./contexts/BoardContext";
 import { SideBarContext } from "./contexts/SidebarContext";
 import Button from "./components/Button";
 import TaskCard from "./components/TaskCard";
+import EditBoard from "./modals/EditBoard";
 
 const TaskContent = () => {
   const { board, selectedIndex } = useContext(BoardContext);
   const { sideBar } = useContext(SideBarContext);
+  const [editBoardVisisble, setEditBoardVisisble] = useState(false);
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -54,10 +56,18 @@ const TaskContent = () => {
             <p className=" text-[18px] font-bold text-white1">
               This board is empty. Create a new column to get started.
             </p>
-            <Button primary={true} text={"+ Add New Column"} />
+            <Button
+              onClick={() => setEditBoardVisisble(true)}
+              primary={true}
+              text={"+ Add New Column"}
+            />
           </div>
         )}
       </div>
+      <EditBoard
+        editBoardVisisble={editBoardVisisble}
+        setEditBoardVisisble={setEditBoardVisisble}
+      />
     </>
   );
 };
