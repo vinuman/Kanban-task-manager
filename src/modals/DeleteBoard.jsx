@@ -3,10 +3,15 @@ import Button from "../components/Button";
 import { BoardContext } from "../contexts/BoardContext";
 
 const DeleteBoard = ({ deleteBoardVisible, setDeleteBoardVisible }) => {
-  const { selectedIndex, board, setBoard } = useContext(BoardContext);
+  const { selectedIndex, board, setBoard, setSelectedIndex } =
+    useContext(BoardContext);
 
   const deleteBoard = () => {
     setBoard((prevBoard) => prevBoard.filter((_, i) => i !== selectedIndex));
+    if (board.length > 0) {
+      setSelectedIndex(0);
+    }
+
     setDeleteBoardVisible(false);
   };
 
