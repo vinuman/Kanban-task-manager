@@ -15,6 +15,9 @@ const SideBar = ({ setVisible }) => {
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
   };
+  if (!board.length) {
+    return null;
+  }
   return (
     <>
       {!sideBar ? (
@@ -35,34 +38,30 @@ const SideBar = ({ setVisible }) => {
             All Boards({board.length})
           </h2>
           <div className=" mt-12 min-h-[400px] ">
-            {board ? (
-              board.map((b, index) => (
-                <div
-                  onClick={() => setSelectedIndex(index)}
-                  className={`flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer ${
-                    selectedIndex === index ? " bg-darkBlue " : ""
+            {board.map((b, index) => (
+              <div
+                onClick={() => setSelectedIndex(index)}
+                className={`flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer ${
+                  selectedIndex === index ? " bg-darkBlue " : ""
+                }`}
+                key={generateKey(b.name)}
+              >
+                <img
+                  className=" w-[16px] h-[16px]"
+                  src={boardIcon}
+                  alt="icon"
+                ></img>
+                <p
+                  className={`  text-[15px] font-bold ${
+                    selectedIndex === index
+                      ? "text-white4 "
+                      : "text-white1 group-hover:text-darkBlue opacity-100"
                   }`}
-                  key={generateKey(b.name)}
                 >
-                  <img
-                    className=" w-[16px] h-[16px]"
-                    src={boardIcon}
-                    alt="icon"
-                  ></img>
-                  <p
-                    className={`  text-[15px] font-bold ${
-                      selectedIndex === index
-                        ? "text-white4 "
-                        : "text-white1 group-hover:text-darkBlue opacity-100"
-                    }`}
-                  >
-                    {b.name}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <div></div>
-            )}
+                  {b.name}
+                </p>
+              </div>
+            ))}
             <div
               onClick={() => setVisible(true)}
               className="flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer"

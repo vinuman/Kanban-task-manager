@@ -4,10 +4,12 @@ import { SideBarContext } from "./contexts/SidebarContext";
 import Button from "./components/Button";
 import TaskCard from "./components/TaskCard";
 import EditBoard from "./modals/EditBoard";
+import CreateBoard from "./modals/CreateBoard";
 
 const TaskContent = () => {
   const { board, selectedIndex } = useContext(BoardContext);
   const { sideBar } = useContext(SideBarContext);
+  const [visible, setVisible] = useState(false);
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
 
   const generateKey = (pre) => {
@@ -22,6 +24,24 @@ const TaskContent = () => {
       }
     });
     return count;
+  }
+
+  if (!board.length) {
+    return (
+      <>
+        <div className="flex flex-col justify-center items-center gap-4 h-screen">
+          <p className="text-[18px] font-bold text-white1">
+            There are no boards available. Create a new board to get started
+          </p>
+          <Button
+            onClick={() => setVisible(true)}
+            primary={true}
+            text={"+ Add New Board"}
+          />
+        </div>
+        <CreateBoard setVisible={setVisible} visible={visible} />
+      </>
+    );
   }
 
   return (

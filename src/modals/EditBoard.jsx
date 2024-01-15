@@ -5,8 +5,12 @@ import Button from "../components/Button";
 
 const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
   const { board, selectedIndex, setBoard } = useContext(BoardContext);
-  const [boardName, setBoardName] = useState(board[selectedIndex].name);
-  const [arr, setArr] = useState(board[selectedIndex].columns);
+  const [boardName, setBoardName] = useState(
+    board.length > 0 ? board[selectedIndex]?.name || "" : ""
+  );
+  const [arr, setArr] = useState(
+    board.length > 0 ? board[selectedIndex]?.columns || "" : ""
+  );
 
   console.log("edit", arr);
 
@@ -52,6 +56,10 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
     setBoard(newBoard);
     setEditBoardVisisble(false);
   };
+
+  if (!board.length) {
+    return null;
+  }
 
   return (
     <>
