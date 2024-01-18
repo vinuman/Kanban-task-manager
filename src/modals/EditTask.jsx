@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
 import Button from "../components/Button";
 import cross from "../assets/icon-cross.svg";
@@ -6,7 +6,7 @@ import chevronDown from "../assets/icon-chevron-down.svg";
 import chevronUp from "../assets/icon-chevron-up.svg";
 import { BoardContext } from "../contexts/BoardContext";
 
-const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
+const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
   const [arr, setArr] = useState([1, 1]);
   const { selectedIndex, board, setBoard } = useContext(BoardContext);
   const [dropDownValue, setDropDownValue] = useState(
@@ -18,14 +18,7 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
-  useEffect(() => {
-    setDropDownValue(
-      board[selectedIndex].columns.length
-        ? board[selectedIndex].columns[0].name
-        : ""
-    );
-  }, [selectedIndex]);
-
+  console.log("lets solve the EditTask", board[selectedIndex].columns);
   let nextKey = 0;
 
   const generateKey = () => {
@@ -84,21 +77,20 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
       newBoard[selectedIndex].columns.forEach((column) => {
         column.name === dropDownValue ? column.tasks.push(newTaskObj) : "";
       });
-
       setBoard(newBoard);
       setAddTaskVisible(false);
     }
   };
   return (
     <>
-      {addTaskVisible && (
+      {editTaskVisible && (
         <div
           onClick={(e) => handleCloseModal(e)}
           className="fixed top-0 left-0 w-[100%] h-[100%] modal flex justify-center items-center"
         >
           <div className="bg-white4 p-[32px] rounded-md shadow-md min-w-[480px]">
             <h2 className="text-black1 mb-8 text-[18px] font-bold">
-              Add New Task
+              Edit Task
             </h2>
             <div className="mb-8">
               <p className="text-white1 mb-2 text-[12px] font-bold">Title</p>
@@ -199,4 +191,4 @@ recharge the batteries a little."
   );
 };
 
-export default AddTask;
+export default EditTask;

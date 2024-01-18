@@ -5,12 +5,14 @@ import Button from "./components/Button";
 import TaskCard from "./components/TaskCard";
 import EditBoard from "./modals/EditBoard";
 import CreateBoard from "./modals/CreateBoard";
+import EditTask from "./modals/EditTask";
 
 const TaskContent = () => {
   const { board, selectedIndex } = useContext(BoardContext);
   const { sideBar } = useContext(SideBarContext);
   const [visible, setVisible] = useState(false);
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
+  const [editTaskVisible, setEditTaskVisible] = useState(false);
 
   let nextKey = 0;
   const generateKey = () => {
@@ -62,7 +64,7 @@ const TaskContent = () => {
                 </h2>
               </div>
               {column.tasks &&
-                column.tasks.map((task) => (
+                column.tasks.map((task, index) => (
                   <TaskCard
                     key={generateKey(task.title)}
                     title={task.title}
@@ -99,6 +101,10 @@ const TaskContent = () => {
       <EditBoard
         editBoardVisisble={editBoardVisisble}
         setEditBoardVisisble={setEditBoardVisisble}
+      />
+      <EditTask
+        editTaskVisible={editTaskVisible}
+        setEditTaskVisible={setEditTaskVisible}
       />
     </>
   );
