@@ -10,6 +10,7 @@ const NavBar = ({ setEditBoardVisisble, setDeleteBoardVisible }) => {
   if (!board.length) {
     return null;
   }
+
   return (
     <>
       {board.length && (
