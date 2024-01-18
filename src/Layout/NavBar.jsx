@@ -4,7 +4,11 @@ import ellipsis from "../assets/icon-vertical-ellipsis.svg";
 import Button from "../components/Button";
 import { BoardContext } from "../contexts/BoardContext";
 
-const NavBar = ({ setEditBoardVisisble, setDeleteBoardVisible }) => {
+const NavBar = ({
+  setEditBoardVisisble,
+  setDeleteBoardVisible,
+  setAddTaskVisible,
+}) => {
   const { board, selectedIndex } = useContext(BoardContext);
   const [editDeleteOption, setEditDeleteOption] = useState(false);
   if (!board.length) {
@@ -21,6 +25,7 @@ const NavBar = ({ setEditBoardVisisble, setDeleteBoardVisible }) => {
           </h2>
           <div className="flex items-center gap-4">
             <Button
+              onClick={() => setAddTaskVisible(true)}
               disabled={!board[selectedIndex].columns.length}
               text={"+ Add New Task"}
               primary={true}

@@ -10,7 +10,9 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
   const [arr, setArr] = useState([1, 1]);
   const { selectedIndex, board, setBoard } = useContext(BoardContext);
   const [dropDownValue, setDropDownValue] = useState(
-    board[selectedIndex].columns[0].name
+    board[selectedIndex].columns.length
+      ? board[selectedIndex].columns[0].name
+      : ""
   );
   const [viewOptions, setViewOptions] = useState(false);
   const [title, setTitle] = useState("");
@@ -38,9 +40,15 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
     setArr(newArr);
   };
 
+  const handleOnChange = (value, index) => {
+    const newArr = [...arr];
+    newArr[index] = value;
+    setArr(newArr);
+  };
+
   const handleCloseModal = (e) => {
     if (e.target.classList.contains("fixed")) {
-      setVisible(false);
+      setAddTaskVisible(false);
     }
   };
 
@@ -54,10 +62,6 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
       }
     });
     if (flag === true) {
-      let selectedColumn = board[selectedIndex].columns.filter(
-        (column) => column.name === dropDownValue
-      );
-      console.log(selectedColumn);
       let newTaskObj = {};
       newTaskObj.title = title;
       newTaskObj.descrition = desc;
@@ -69,6 +73,13 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
         newSubObj.isCompleted = false;
         subTaskArray.push(newSubObj);
       });
+      newTaskObj.subtasks = subTaskArray;
+      let newBoard = [...board];
+      newBoard[selectedIndex].columns.forEach((column) => {
+        column.name === dropDownValue ? column.tasks.push(newTaskObj) : "";
+      });
+      setBoard(newBoard);
+      setAddTaskVisible(false);
     }
   };
   return (
@@ -111,7 +122,8 @@ recharge the batteries a little."
                   className="flex justify-between items-center w-[100%] h-[40px] mb-2"
                 >
                   <input
-                    placeholder="eg: todo"
+                    onChange={(e) => handleOnChange(e.target.value, i)}
+                    placeholder="eg: Make mild coffee"
                     type="text"
                     className="border border-white1 rounded-lg w-[86%] h-[40px] px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none"
                   ></input>

@@ -10,10 +10,11 @@ const Layout = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
   const [deleteBoardVisible, setDeleteBoardVisible] = useState(false);
-  const [addTaskVisible, setAddTaskVisible] = useState(true);
+  const [addTaskVisible, setAddTaskVisible] = useState(false);
   return (
     <>
       <NavBar
+        setAddTaskVisible={setAddTaskVisible}
         setEditBoardVisisble={setEditBoardVisisble}
         setDeleteBoardVisible={setDeleteBoardVisible}
       />
@@ -30,7 +31,7 @@ const Layout = ({ children }) => {
       />
       <AddTask
         addTaskVisible={addTaskVisible}
-        setAddTaskVisible={addTaskVisible}
+        setAddTaskVisible={setAddTaskVisible}
       />
     </>
   );
