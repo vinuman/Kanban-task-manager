@@ -22,7 +22,7 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
   useEffect(() => {
     setBoardName(board[selectedIndex]?.name || "");
     setArr(board[selectedIndex]?.columns || []);
-  }, [selectedIndex]);
+  }, [selectedIndex, board]);
 
   // Function to close the modal when clicking outside the content
   const handleCloseModal = (e) => {

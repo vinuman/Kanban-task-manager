@@ -13,6 +13,13 @@ const TaskContent = () => {
   const [visible, setVisible] = useState(false);
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
   const [editTaskVisible, setEditTaskVisible] = useState(false);
+  const [editTaskData, setEditTaskData] = useState({
+    title: "",
+    desc: "",
+    index: null,
+    subtasks: [],
+    status: "",
+  });
 
   let nextKey = 0;
   const generateKey = () => {
@@ -28,6 +35,11 @@ const TaskContent = () => {
     });
     return count;
   }
+
+  const openEditTaskModal = (data) => {
+    setEditTaskData(data);
+    setEditTaskVisible(true);
+  };
 
   if (!board.length) {
     return (
@@ -66,6 +78,15 @@ const TaskContent = () => {
               {column.tasks &&
                 column.tasks.map((task, index) => (
                   <TaskCard
+                    onClick={() =>
+                      openEditTaskModal({
+                        title: task.title,
+                        desc: task.description,
+                        index: index,
+                        subtasks: task.subtasks,
+                        status: task.status,
+                      })
+                    }
                     key={generateKey(task.title)}
                     title={task.title}
                     total={task.subtasks.length}
@@ -103,6 +124,8 @@ const TaskContent = () => {
         setEditBoardVisisble={setEditBoardVisisble}
       />
       <EditTask
+        editTaskData={editTaskData}
+        setEditTaskData={setEditTaskData}
         editTaskVisible={editTaskVisible}
         setEditTaskVisible={setEditTaskVisible}
       />

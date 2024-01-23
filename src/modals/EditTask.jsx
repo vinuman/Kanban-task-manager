@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import React from "react";
 import Button from "../components/Button";
 import cross from "../assets/icon-cross.svg";
@@ -6,8 +6,13 @@ import chevronDown from "../assets/icon-chevron-down.svg";
 import chevronUp from "../assets/icon-chevron-up.svg";
 import { BoardContext } from "../contexts/BoardContext";
 
-const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
-  const [arr, setArr] = useState([1, 1]);
+const EditTask = ({
+  editTaskVisible,
+  setEditTaskVisible,
+  editTaskData,
+  setEditTaskData,
+}) => {
+  const [arr, setArr] = useState([1]);
   const { selectedIndex, board, setBoard } = useContext(BoardContext);
   const [dropDownValue, setDropDownValue] = useState(
     board[selectedIndex].columns.length
@@ -15,16 +20,23 @@ const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
       : ""
   );
   const [viewOptions, setViewOptions] = useState(false);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-
+  const [title, setTitle] = useState(editTaskData && editTaskData.title);
+  const [desc, setDesc] = useState(editTaskData && editTaskData.desc);
+  console.log(editTaskData);
   console.log("lets solve the EditTask", board[selectedIndex].columns);
+
+  useEffect(() => {
+    setTitle(editTaskData && editTaskData.title);
+    setDesc(editTaskData && editTaskData.desc);
+  }, [editTaskData]);
+
   let nextKey = 0;
 
   const generateKey = () => {
     return nextKey++;
   };
 
+  //working
   const handleRemoveColumn = () => {
     if (arr.length === 0) {
       return;
@@ -34,53 +46,43 @@ const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
     setArr(newArr);
   };
 
+  //working
   const handleAddColumn = () => {
     let newArr = [...arr];
     newArr.push(1);
     setArr(newArr);
   };
 
+  //Working
   const handleOnChange = (value, index) => {
-    const newArr = [...arr];
+    let newArr = [...arr];
     newArr[index] = value;
     setArr(newArr);
   };
 
+  //Working
   const handleCloseModal = (e) => {
     if (e.target.classList.contains("fixed")) {
-      setAddTaskVisible(false);
+      setEditTaskData({
+        title: "",
+        desc: "",
+        index: null,
+        subtasks: [],
+      });
+      setTitle("");
+      setEditTaskVisible(false);
     }
   };
 
-  const saveTask = () => {
-    if (title.trim() === "") return;
-    let flag = true;
-    arr.forEach((a) => {
-      if (a === 1) {
-        flag = false;
-      }
-    });
-    if (flag === true) {
-      let newTaskObj = {};
-      newTaskObj.title = title;
-      newTaskObj.descrition = desc;
-      newTaskObj.status = dropDownValue;
-      let subTaskArray = [];
-      arr.forEach((a, i) => {
-        let newSubObj = {};
-        newSubObj.title = a;
-        newSubObj.isCompleted = false;
-        subTaskArray.push(newSubObj);
-      });
-      newTaskObj.subtasks = subTaskArray;
-      let newBoard = [...board];
-      newBoard[selectedIndex].columns.forEach((column) => {
-        column.name === dropDownValue ? column.tasks.push(newTaskObj) : "";
-      });
-      setBoard(newBoard);
-      setAddTaskVisible(false);
-    }
+  // need to work
+  const handleOnchangeExisting = (value, index) => {
+    let newArr = [...editTaskData.subtasks];
+    newArr[index] = value;
+    setEditTaskData({ ...editTaskData, subtasks: newArr });
+    console.log("new EdittaskObj is", { ...editTaskData, subtasks: newArr });
   };
+  const handleRemoveColumnExisting = () => {};
+  const saveTask = () => {};
   return (
     <>
       {editTaskVisible && (
@@ -95,6 +97,7 @@ const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
             <div className="mb-8">
               <p className="text-white1 mb-2 text-[12px] font-bold">Title</p>
               <input
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Take coffee break"
                 type="text"
@@ -106,6 +109,7 @@ const EditTask = ({ editTaskVisible, setEditTaskVisible }) => {
                 Description
               </p>
               <textarea
+                value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder="e.g. It’s always good to take a break. This 15 minute break will 
 recharge the batteries a little."
@@ -115,12 +119,35 @@ recharge the batteries a little."
             </div>
             <div>
               <p className="text-white1 mb-2 text-[12px] font-bold">Subtasks</p>
-              {arr.map((_, i) => (
+              {editTaskData.subtasks.map((subtask, index) => (
                 <div
                   key={generateKey()}
                   className="flex justify-between items-center w-[100%] h-[40px] mb-2"
                 >
                   <input
+                    value={subtask.title}
+                    onChange={(e) =>
+                      handleOnchangeExisting(e.target.value, index)
+                    }
+                    placeholder="eg: Make mild coffee"
+                    type="text"
+                    className="border border-white1 rounded-lg w-[86%] h-[40px] px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none"
+                  ></input>
+                  <img
+                    onClick={handleRemoveColumnExisting}
+                    className="w-[7%] cursor-pointer"
+                    src={cross}
+                    alt="close icon"
+                  ></img>
+                </div>
+              ))}
+              {arr.map((a, i) => (
+                <div
+                  key={generateKey()}
+                  className="flex justify-between items-center w-[100%] h-[40px] mb-2"
+                >
+                  <input
+                    value={a.title}
                     onChange={(e) => handleOnChange(e.target.value, i)}
                     placeholder="eg: Make mild coffee"
                     type="text"
