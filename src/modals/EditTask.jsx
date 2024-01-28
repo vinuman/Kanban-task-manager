@@ -13,6 +13,9 @@ const EditTask = ({
   setEditTaskData,
 }) => {
   const [arr, setArr] = useState([1]);
+  const [existingArr, setExistingArr] = useState(
+    editTaskData && editTaskData.subtasks
+  );
   const { selectedIndex, board, setBoard } = useContext(BoardContext);
   const [dropDownValue, setDropDownValue] = useState(
     board[selectedIndex].columns.length
@@ -22,12 +25,13 @@ const EditTask = ({
   const [viewOptions, setViewOptions] = useState(false);
   const [title, setTitle] = useState(editTaskData && editTaskData.title);
   const [desc, setDesc] = useState(editTaskData && editTaskData.desc);
-  console.log(editTaskData);
-  console.log("lets solve the EditTask", board[selectedIndex].columns);
+
+  console.log("our board", board[selectedIndex].columns);
 
   useEffect(() => {
     setTitle(editTaskData && editTaskData.title);
     setDesc(editTaskData && editTaskData.desc);
+    setExistingArr(editTaskData && editTaskData.subtasks);
   }, [editTaskData]);
 
   let nextKey = 0;
@@ -64,6 +68,7 @@ const EditTask = ({
   const handleCloseModal = (e) => {
     if (e.target.classList.contains("fixed")) {
       setEditTaskData({
+        name: "",
         title: "",
         desc: "",
         index: null,
@@ -74,13 +79,15 @@ const EditTask = ({
     }
   };
 
-  // need to work
+  //Working
   const handleOnchangeExisting = (value, index) => {
     let newArr = [...editTaskData.subtasks];
-    newArr[index] = value;
-    setEditTaskData({ ...editTaskData, subtasks: newArr });
-    console.log("new EdittaskObj is", { ...editTaskData, subtasks: newArr });
+    newArr[index].title = value;
+    setExistingArr(newArr);
+    console.log("the new arr is", existingArr);
   };
+
+  // need to work
   const handleRemoveColumnExisting = () => {};
   const saveTask = () => {};
   return (
@@ -119,28 +126,29 @@ recharge the batteries a little."
             </div>
             <div>
               <p className="text-white1 mb-2 text-[12px] font-bold">Subtasks</p>
-              {editTaskData.subtasks.map((subtask, index) => (
-                <div
-                  key={generateKey()}
-                  className="flex justify-between items-center w-[100%] h-[40px] mb-2"
-                >
-                  <input
-                    value={subtask.title}
-                    onChange={(e) =>
-                      handleOnchangeExisting(e.target.value, index)
-                    }
-                    placeholder="eg: Make mild coffee"
-                    type="text"
-                    className="border border-white1 rounded-lg w-[86%] h-[40px] px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none"
-                  ></input>
-                  <img
-                    onClick={handleRemoveColumnExisting}
-                    className="w-[7%] cursor-pointer"
-                    src={cross}
-                    alt="close icon"
-                  ></img>
-                </div>
-              ))}
+              {existingArr &&
+                existingArr.map((subtask, index) => (
+                  <div
+                    key={generateKey()}
+                    className="flex justify-between items-center w-[100%] h-[40px] mb-2"
+                  >
+                    <input
+                      value={subtask.title}
+                      onChange={(e) =>
+                        handleOnchangeExisting(e.target.value, index)
+                      }
+                      placeholder="eg: Make mild coffee"
+                      type="text"
+                      className="border border-white1 rounded-lg w-[86%] h-[40px] px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none"
+                    ></input>
+                    <img
+                      onClick={handleRemoveColumnExisting}
+                      className="w-[7%] cursor-pointer"
+                      src={cross}
+                      alt="close icon"
+                    ></img>
+                  </div>
+                ))}
               {arr.map((a, i) => (
                 <div
                   key={generateKey()}

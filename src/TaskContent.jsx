@@ -14,6 +14,7 @@ const TaskContent = () => {
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
   const [editTaskVisible, setEditTaskVisible] = useState(false);
   const [editTaskData, setEditTaskData] = useState({
+    name: "",
     title: "",
     desc: "",
     index: null,
@@ -80,6 +81,7 @@ const TaskContent = () => {
                   <TaskCard
                     onClick={() =>
                       openEditTaskModal({
+                        name: column.name,
                         title: task.title,
                         desc: task.description,
                         index: index,

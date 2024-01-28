@@ -9,7 +9,6 @@ function App() {
   const [board, setBoard] = useState(data.boards);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [sideBar, setSideBar] = useState(true);
-  console.log(board);
 
   return (
     <>

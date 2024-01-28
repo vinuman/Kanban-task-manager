@@ -12,7 +12,6 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
     board.length > 0 ? board[selectedIndex]?.columns || "" : ""
   );
 
-  console.log("edit", arr);
   let nextKey = 0;
 
   const generateKey = () => {
