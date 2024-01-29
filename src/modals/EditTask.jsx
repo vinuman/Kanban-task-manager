@@ -12,7 +12,7 @@ const EditTask = ({
   editTaskData,
   setEditTaskData,
 }) => {
-  const [arr, setArr] = useState([1]);
+  const [arr, setArr] = useState([]);
   const [existingArr, setExistingArr] = useState(
     editTaskData && editTaskData.subtasks
   );
@@ -26,12 +26,11 @@ const EditTask = ({
   const [title, setTitle] = useState(editTaskData && editTaskData.title);
   const [desc, setDesc] = useState(editTaskData && editTaskData.desc);
 
-  console.log("our board", board[selectedIndex].columns);
-
   useEffect(() => {
     setTitle(editTaskData && editTaskData.title);
     setDesc(editTaskData && editTaskData.desc);
     setExistingArr(editTaskData && editTaskData.subtasks);
+    setDropDownValue(editTaskData && editTaskData.name);
   }, [editTaskData]);
 
   let nextKey = 0;
@@ -40,7 +39,6 @@ const EditTask = ({
     return nextKey++;
   };
 
-  //working
   const handleRemoveColumn = () => {
     if (arr.length === 0) {
       return;
@@ -50,21 +48,18 @@ const EditTask = ({
     setArr(newArr);
   };
 
-  //working
   const handleAddColumn = () => {
     let newArr = [...arr];
     newArr.push(1);
     setArr(newArr);
   };
 
-  //Working
   const handleOnChange = (value, index) => {
     let newArr = [...arr];
     newArr[index] = value;
     setArr(newArr);
   };
 
-  //Working
   const handleCloseModal = (e) => {
     if (e.target.classList.contains("fixed")) {
       setEditTaskData({
@@ -79,17 +74,63 @@ const EditTask = ({
     }
   };
 
-  //Working
   const handleOnchangeExisting = (value, index) => {
-    let newArr = [...editTaskData.subtasks];
+    let newArr = [...existingArr];
     newArr[index].title = value;
     setExistingArr(newArr);
-    console.log("the new arr is", existingArr);
   };
 
+  const handleRemoveColumnExisting = (id) => {
+    if (existingArr.length === 0) return;
+    let newArr = existingArr.filter((_, index) => index !== id);
+    setExistingArr(newArr);
+  };
   // need to work
-  const handleRemoveColumnExisting = () => {};
-  const saveTask = () => {};
+  const saveTask = () => {
+    if (title.trim() === "") return;
+
+    let flag = true;
+    if (arr.length) {
+      arr.forEach((a) => {
+        if (a === 1) {
+          flag = false;
+        }
+      });
+    }
+
+    if (flag) {
+      let newTaskObj = {};
+      newTaskObj.title = title;
+      newTaskObj.descrition = desc;
+      newTaskObj.status = dropDownValue;
+      let subTaskArray = [...existingArr];
+
+      if (arr.length > 0) {
+        arr.forEach((a) => {
+          let newSubObj = {};
+          newSubObj.title = a;
+          newSubObj.isCompleted = false;
+          subTaskArray.push(newSubObj);
+        });
+      }
+
+      let newBoard = [...board];
+
+      newBoard[selectedIndex].columns.forEach((col, i) => {
+        if (col.name === editTaskData.name) {
+          col.tasks[editTaskData.index] = newTaskObj;
+        }
+      });
+
+      console.log("save task", editTaskData.index, newBoard);
+      setTitle("");
+      setDesc("");
+      setDropDownValue("");
+      setArr([]);
+      setEditTaskVisible(false);
+    }
+  };
+
   return (
     <>
       {editTaskVisible && (
@@ -142,7 +183,7 @@ recharge the batteries a little."
                       className="border border-white1 rounded-lg w-[86%] h-[40px] px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none"
                     ></input>
                     <img
-                      onClick={handleRemoveColumnExisting}
+                      onClick={() => handleRemoveColumnExisting(index)}
                       className="w-[7%] cursor-pointer"
                       src={cross}
                       alt="close icon"

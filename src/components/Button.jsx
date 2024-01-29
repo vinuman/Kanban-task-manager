@@ -18,7 +18,7 @@ const Button = ({
           primary
             ? " bg-darkBlue hover:bg-lightBlue"
             : secondary
-            ? " bg-white2 hover:bg-white3 text-lightBlue"
+            ? " bg-lightBlue hover:bg-darkBlue text-lightBlue"
             : destructive
             ? " bg-red1 hover:bg-red2"
             : ""

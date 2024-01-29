@@ -50,7 +50,7 @@ const EditBoard = ({ editBoardVisisble, setEditBoardVisisble }) => {
 
   const handleAddColumn = () => {
     console.log("Before add:", arr);
-    setArr((prevArr) => [...prevArr, { name: "New Column", tasks: [] }]);
+    setArr((prevArr) => [...prevArr, { name: "", tasks: [] }]);
     console.log("After add:", arr);
   };
 

@@ -86,6 +86,9 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
       });
 
       setBoard(newBoard);
+      setTitle("");
+      setDesc("");
+      setArr([1, 1]);
       setAddTaskVisible(false);
     }
   };
