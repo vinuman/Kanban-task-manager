@@ -28,7 +28,7 @@ const SideBar = ({ setVisible }) => {
           <img className="" src={iconShowSideBar} alt="icon"></img>
         </div>
       ) : (
-        <div className="w-[280px] pt-[32px] pr-[12px] h-screen absolute top-0  bg-white4">
+        <div className="w-[280px] pt-[32px] pr-[12px] fixed top-0 bottom-0 bg-white4">
           <img
             className="mx-[24px] w-[152px] h-[25px]"
             src={logoLight}
@@ -37,7 +37,7 @@ const SideBar = ({ setVisible }) => {
           <h2 className=" mt-[40px] px-[24px] text-[16px] font-bold tracking-[2.4px] text-white1">
             All Boards({board.length})
           </h2>
-          <div className=" mt-12 min-h-[400px] ">
+          <div className=" mt-12 min-h-[400px]">
             {board.map((b, index) => (
               <div
                 onClick={() => setSelectedIndex(index)}
@@ -79,14 +79,14 @@ const SideBar = ({ setVisible }) => {
             </div>
           </div>
 
-          <div className="flex items-center justify-around p-4 w-[90%] mx-auto mt-[40px] bg-white3">
+          <div className="flex items-center justify-around p-4 w-[90%] mx-auto  bg-white3  mb-2">
             <img src={sunIcon} alt="light theme"></img>
             <Toggle />
             <img src={moonIcon} alt="dark theme"></img>
           </div>
           <div
             onClick={() => setSideBar(false)}
-            className="flex items-center gap-[16px] px-[24px] rounded-r-[100px] absolute bottom-20 hover:bg-lightBlue group cursor-pointer transition-all duration-300 w-[276px] h-[48px]"
+            className="flex items-center gap-[16px] px-[24px] rounded-r-[100px]  hover:bg-lightBlue group cursor-pointer transition-all duration-300 w-[276px] h-[48px]"
           >
             <img
               className="w-[16px] h-[16px] rounded-[50%] group-hover:bg-white4"

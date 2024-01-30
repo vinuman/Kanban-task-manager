@@ -92,7 +92,7 @@ const EditTask = ({
     if (arr.length) {
       flag = arr.every((a) => a !== 1);
     }
-    if (flag) {
+    if (flag && dropDownValue === editTaskData.status) {
       let newBoard = [...board];
       newBoard[selectedIndex].columns.forEach((column) => {
         if (column.name === editTaskData.name) {
@@ -112,6 +112,35 @@ const EditTask = ({
               task.subtasks = newSubtaskArray;
             }
           });
+        }
+      });
+      setBoard(newBoard);
+      setEditTaskVisible(false);
+    }
+    if (flag && dropDownValue !== editTaskData.status) {
+      let newBoard = [...board];
+      newBoard[selectedIndex].columns.forEach((column) => {
+        if (column.name === editTaskData.name) {
+          column.tasks.splice(editTaskData.index, 1);
+        }
+      });
+      newBoard[selectedIndex].columns.forEach((column) => {
+        if (column.name === dropDownValue) {
+          let newSubtaskArray = existingArr.concat(
+            arr.map((a) => {
+              return {
+                title: a,
+                isCompleted: false,
+              };
+            })
+          );
+          let newTask = {
+            title: title,
+            description: desc,
+            status: dropDownValue,
+            subtasks: newSubtaskArray,
+          };
+          column.tasks.push(newTask);
         }
       });
       setBoard(newBoard);

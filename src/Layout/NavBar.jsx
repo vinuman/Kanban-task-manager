@@ -18,7 +18,7 @@ const NavBar = ({
   return (
     <>
       {board.length && (
-        <nav className="px-[24px] py-[24px] flex items-center justify-between">
+        <nav className="px-[24px] py-[24px] h-[96px] sticky top-0 bg-white4 flex items-center justify-between">
           <img className=" w-[152px] h-[25px]" src={logoLight} alt="logo"></img>
           <h2 className=" text-[24px] font-bold text-black1 tracking-wide">
             {board[selectedIndex].name}

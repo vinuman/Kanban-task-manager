@@ -19,7 +19,9 @@ const Layout = ({ children }) => {
         setDeleteBoardVisible={setDeleteBoardVisible}
       />
       <SideBar setVisible={setVisible} />
-      <div className=" overflow-x-auto bg-[#F4F7FD]">{children}</div>
+      <div className=" overflow-scroll bg-[#F4F7FD] h-[calc(100% - )]">
+        {children}
+      </div>
       <CreateBoard setVisible={setVisible} visible={visible} />
       <EditBoard
         editBoardVisisble={editBoardVisisble}

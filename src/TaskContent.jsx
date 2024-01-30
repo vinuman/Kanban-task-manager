@@ -70,7 +70,7 @@ const TaskContent = () => {
       >
         {board && board[selectedIndex].columns.length ? (
           board[selectedIndex].columns.map((column) => (
-            <div key={generateKey()} className="min-w-[280px] ">
+            <div key={generateKey()} className="min-w-[280px]">
               <div className="flex items-center gap-[12px]">
                 <div className={`w-[15px] h-[15px] rounded-full border`}></div>
                 <h2 className=" text-white1 text-[12px] tracking-[2.4px] uppercase font-bold">
