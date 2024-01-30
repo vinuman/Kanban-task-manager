@@ -10,6 +10,7 @@ import EditTask from "./modals/EditTask";
 const TaskContent = () => {
   const { board, selectedIndex } = useContext(BoardContext);
   const { sideBar } = useContext(SideBarContext);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [editBoardVisisble, setEditBoardVisisble] = useState(false);
   const [editTaskVisible, setEditTaskVisible] = useState(false);
@@ -109,7 +110,10 @@ const TaskContent = () => {
             />
           </div>
         )}
-        {board && board[selectedIndex].columns.length ? (
+        {board &&
+        board[selectedIndex] &&
+        board[selectedIndex].columns &&
+        board[selectedIndex].columns.length ? (
           <div
             onClick={() => setEditBoardVisisble(true)}
             className=" min-w-[280px] h-screen flex items-center justify-center text-[24px] text-white1 hover:text-black3 font-bold cursor-pointer rounded-md linear hover:border hover:border-b-lightBlue"

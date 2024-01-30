@@ -85,48 +85,36 @@ const EditTask = ({
     let newArr = existingArr.filter((_, index) => index !== id);
     setExistingArr(newArr);
   };
-  // need to work
+
   const saveTask = () => {
     if (title.trim() === "") return;
-
     let flag = true;
     if (arr.length) {
-      arr.forEach((a) => {
-        if (a === 1) {
-          flag = false;
-        }
-      });
+      flag = arr.every((a) => a !== 1);
     }
-
     if (flag) {
-      let newTaskObj = {};
-      newTaskObj.title = title;
-      newTaskObj.descrition = desc;
-      newTaskObj.status = dropDownValue;
-      let subTaskArray = [...existingArr];
-
-      if (arr.length > 0) {
-        arr.forEach((a) => {
-          let newSubObj = {};
-          newSubObj.title = a;
-          newSubObj.isCompleted = false;
-          subTaskArray.push(newSubObj);
-        });
-      }
-
       let newBoard = [...board];
-
-      newBoard[selectedIndex].columns.forEach((col, i) => {
-        if (col.name === editTaskData.name) {
-          col.tasks[editTaskData.index] = newTaskObj;
+      newBoard[selectedIndex].columns.forEach((column) => {
+        if (column.name === editTaskData.name) {
+          column.tasks.forEach((task, index) => {
+            if (index === editTaskData.index) {
+              task.title = title;
+              task.description = desc;
+              task.status = dropDownValue;
+              let newSubtaskArray = existingArr.concat(
+                arr.map((a) => {
+                  return {
+                    title: a,
+                    isCompleted: false,
+                  };
+                })
+              );
+              task.subtasks = newSubtaskArray;
+            }
+          });
         }
       });
-
-      console.log("save task", editTaskData.index, newBoard);
-      setTitle("");
-      setDesc("");
-      setDropDownValue("");
-      setArr([]);
+      setBoard(newBoard);
       setEditTaskVisible(false);
     }
   };
