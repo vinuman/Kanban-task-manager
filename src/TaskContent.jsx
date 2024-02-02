@@ -42,6 +42,7 @@ const TaskContent = () => {
     setEditTaskData(data);
     setEditTaskVisible(true);
   };
+  var colorArray = ["#EA5555", "#635FC7", "#828FA3", "#49C4E5", "#999966"];
 
   if (!board.length) {
     return (
@@ -69,10 +70,16 @@ const TaskContent = () => {
         }`}
       >
         {board && board[selectedIndex].columns.length ? (
-          board[selectedIndex].columns.map((column) => (
+          board[selectedIndex].columns.map((column, index) => (
             <div key={generateKey()} className="min-w-[280px]">
               <div className="flex items-center gap-[12px]">
-                <div className={`w-[15px] h-[15px] rounded-full border`}></div>
+                <div
+                  style={{
+                    backgroundColor:
+                      index > 4 ? colorArray[index - 5] : colorArray[index],
+                  }}
+                  className={`w-[15px] h-[15px] rounded-full`}
+                ></div>
                 <h2 className=" text-white1 text-[12px] tracking-[2.4px] uppercase font-bold">
                   {column.name} ({column.tasks.length})
                 </h2>
