@@ -10,7 +10,7 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
   const [arr, setArr] = useState([1, 1]);
   const { selectedIndex, board, setBoard } = useContext(BoardContext);
   const [dropDownValue, setDropDownValue] = useState(
-    board[selectedIndex].columns.length
+    board.length && board[selectedIndex].columns.length
       ? board[selectedIndex].columns[0].name
       : ""
   );
@@ -20,7 +20,7 @@ const AddTask = ({ addTaskVisible, setAddTaskVisible }) => {
 
   useEffect(() => {
     setDropDownValue(
-      board[selectedIndex].columns.length
+      board.length && board[selectedIndex].columns.length
         ? board[selectedIndex].columns[0].name
         : ""
     );
@@ -166,25 +166,27 @@ recharge the batteries a little."
                 </div>
               ) : (
                 <div className="border border-white1 rounded-lg w-[100%]  px-[16px] py-[8px] text-black1 text-[13px] font-medium outline-none flex flex-col justify-between items-start cursor-pointer mb-4">
-                  {board[selectedIndex].columns.map((column, index) => (
-                    <div
-                      onClick={() => {
-                        setDropDownValue(column.name);
-                        setViewOptions(false);
-                      }}
-                      key={index}
-                      className="flex justify-between items-center gap-8 w-[100%] "
-                    >
-                      <p className="text-white1 text-[12px] font-bold mb-2">
-                        {column.name}
-                      </p>
-                      {index === 0 ? (
-                        <img src={chevronUp} alt={"dropdown icon"}></img>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  ))}
+                  {board.length &&
+                    board[selectedIndex].columns.length &&
+                    board[selectedIndex].columns.map((column, index) => (
+                      <div
+                        onClick={() => {
+                          setDropDownValue(column.name);
+                          setViewOptions(false);
+                        }}
+                        key={index}
+                        className="flex justify-between items-center gap-8 w-[100%] hover:bg-white3"
+                      >
+                        <p className="text-white1 text-[12px] font-bold mb-2">
+                          {column.name}
+                        </p>
+                        {index === 0 ? (
+                          <img src={chevronUp} alt={"dropdown icon"}></img>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    ))}
                 </div>
               )}
 
