@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { SideBarContext } from "../contexts/SidebarContext";
-import { BoardContext } from "../contexts/BoardContext";
+
 import iconShowSideBar from "../assets/icon-show-sidebar.svg";
 import iconHideSideBar from "../assets/icon-hide-sidebar.svg";
 import logoLight from "../assets/logo-dark.svg";
@@ -9,18 +8,10 @@ import Toggle from "../components/Toggle";
 import sunIcon from "../assets/icon-light-theme.svg";
 import moonIcon from "../assets/icon-dark-theme.svg";
 
-const SideBar = ({ setVisible }) => {
-  const { sideBar, setSideBar, board } = useContext(SideBarContext);
-  const { selectedIndex, setSelectedIndex } = useContext(BoardContext);
-  const generateKey = (pre) => {
-    return `${pre}_${new Date().getTime()}`;
-  };
-  if (!board.length) {
-    return null;
-  }
+const SideBar = () => {
   return (
     <>
-      {!sideBar ? (
+      {false ? (
         <div
           onClick={() => setSideBar(true)}
           className=" w-[56px] h-[48px] bg-darkBlue hover:bg-lightBlue transition-all duration-300  absolute bottom-20 cursor-pointer flex items-center justify-center rounded-r-[100px]"
@@ -35,33 +26,10 @@ const SideBar = ({ setVisible }) => {
             alt="logo"
           ></img>
           <h2 className=" mt-[40px] px-[24px] text-[16px] font-bold tracking-[2.4px] text-white1">
-            All Boards({board.length})
+            All Boards
           </h2>
           <div className=" mt-12 min-h-[400px]">
-            {board.map((b, index) => (
-              <div
-                onClick={() => setSelectedIndex(index)}
-                className={`flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer ${
-                  selectedIndex === index ? " bg-darkBlue " : ""
-                }`}
-                key={generateKey(b.name)}
-              >
-                <img
-                  className=" w-[16px] h-[16px]"
-                  src={boardIcon}
-                  alt="icon"
-                ></img>
-                <p
-                  className={`  text-[15px] font-bold ${
-                    selectedIndex === index
-                      ? "text-white4 "
-                      : "text-white1 group-hover:text-darkBlue opacity-100"
-                  }`}
-                >
-                  {b.name}
-                </p>
-              </div>
-            ))}
+            BOARD LIST GOES HERE
             <div
               onClick={() => setVisible(true)}
               className="flex px-[24px] py-[12px] rounded-r-[100px] items-center gap-[16px] mb-[14px] group cursor-pointer"
